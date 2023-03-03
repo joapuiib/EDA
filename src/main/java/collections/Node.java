@@ -1,23 +1,23 @@
 package collections;
 
 public class Node<E> {
-    private E object;
-    private Node<E> next;
+    E objecto;
+    Node<E> siguiente;
 
     public Node(E object) {
-        this.object = object;
-        this.next = null;
+        this.objecto = object;
+        this.siguiente = null;
     }
 
-    public E getObject(){
-        return this.object;
+    public E getObjecto(){
+        return this.objecto;
     }
 
     public Node<E> next(){
-        return this.next;
+        return this.siguiente;
     }
 
-    public void setNext(Node<E> next) {
-        this.next = next;
+    public void setSiguiente(Node<E> siguiente) {
+        this.siguiente = siguiente;
     }
 }

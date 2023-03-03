@@ -17,8 +17,8 @@ public class LinkedList<E> {
         if(isEnd())
             last = newNode;
 
-        newNode.setNext(previous.next());
-        previous.setNext(newNode);
+        newNode.setSiguiente(previous.next());
+        previous.setSiguiente(newNode);
         previous = newNode;
 
         length++;
@@ -29,11 +29,11 @@ public class LinkedList<E> {
         if(isEmpty())
             return item;
         else if(isEnd()){
-            previous.setNext(null);
+            previous.setSiguiente(null);
             this.last = previous;
         } else {
             Node<E> nextCurrent = this.previous.next().next();
-            previous.setNext(nextCurrent);
+            previous.setSiguiente(nextCurrent);
         }
         length--;
         return item;
@@ -54,7 +54,7 @@ public class LinkedList<E> {
     }
 
     public E get(){
-        return this.previous.next().getObject();
+        return this.previous.next().getObjecto();
     }
 
     public boolean isEnd(){

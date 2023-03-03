@@ -19,7 +19,7 @@ public class LinkedListQueue<E> implements Queue<E> {
             first = node;
             last = node;
         } else {
-            last.setNext(node);
+            last.setSiguiente(node);
             last = node;
         }
         length++;
@@ -38,9 +38,9 @@ public class LinkedListQueue<E> implements Queue<E> {
             }
 
             if(anterior != null)
-                anterior.setNext(node);
+                anterior.setSiguiente(node);
 
-            node.setNext(seguent);
+            node.setSiguiente(seguent);
             length++;
         }
     }
@@ -50,7 +50,7 @@ public class LinkedListQueue<E> implements Queue<E> {
         if(isEmpty())
             return null;
 
-        E object = first.getObject();
+        E object = first.getObjecto();
 
         this.first = first.next();
         length--;
@@ -60,7 +60,7 @@ public class LinkedListQueue<E> implements Queue<E> {
 
     @Override
     public E first() {
-        return this.first.getObject();
+        return this.first.getObjecto();
     }
 
     @Override
