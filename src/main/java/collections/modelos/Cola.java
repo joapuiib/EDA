@@ -1,4 +1,4 @@
-package collections;
+package collections.modelos;
 
 /**
  * La estructura de datos Cola sigue un política FIFO (First-In First-Out),
@@ -12,30 +12,30 @@ package collections;
  * La interficie Cola especifica el funcionamiento general de una cualquier cola,
  * independentemente de su implementación.
  */
-public interface Queue<E> {
+public interface Cola<E> {
     /**
      * Inserta un elemento al final de la cola
      * @param item Elemento que se desea insertar
      */
-    void queue(E item);
+    void encolar(E item);
 
     /**
      * Recupera y elimina el siguiente elemento de la cola en salir
      * @return Siguiente elemento de la cola
      */
-    E dequeue();
+    E desencolar();
 
     /**
      * Recupera el siguiente elemento de la cola en salir.
-     * Al contrario que {@link #queue(E item)}, este método no elimina el objeto.
+     * Al contrario que {@link #encolar(E item)}, este método no elimina el objeto.
      * @return Siguiente elemento de la cola
      */
-    E first();
+    E primero();
 
 
     /**
      * Indica si la cola está vacia
      * @return true si la cola está vacía; false en qualquier otro caso
      */
-    boolean isEmpty();
+    boolean esVacia();
 }

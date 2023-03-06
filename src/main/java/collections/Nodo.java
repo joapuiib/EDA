@@ -1,10 +1,10 @@
 package collections;
 
-public class Node<E> {
+public class Nodo<E> {
     E objecto;
-    Node<E> siguiente;
+    Nodo<E> siguiente;
 
-    public Node(E object) {
+    public Nodo(E object) {
         this.objecto = object;
         this.siguiente = null;
     }
@@ -13,11 +13,11 @@ public class Node<E> {
         return this.objecto;
     }
 
-    public Node<E> next(){
+    public Nodo<E> next(){
         return this.siguiente;
     }
 
-    public void setSiguiente(Node<E> siguiente) {
+    public void setSiguiente(Nodo<E> siguiente) {
         this.siguiente = siguiente;
     }
 }

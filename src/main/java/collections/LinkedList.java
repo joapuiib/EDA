@@ -1,25 +1,25 @@
 package collections;
 
 public class LinkedList<E> {
-    private Node<E> first;
-    private Node<E> last;
-    private Node<E> previous;
+    private Nodo<E> first;
+    private Nodo<E> last;
+    private Nodo<E> previous;
     private int length;
 
     public LinkedList(){
-        first = last = previous = new Node<>(null);
+        first = last = previous = new Nodo<>(null);
         length = 0;
     }
 
     public void insert(E item){
-        Node<E> newNode = new Node<>(item);
+        Nodo<E> newNodo = new Nodo<>(item);
 
         if(isEnd())
-            last = newNode;
+            last = newNodo;
 
-        newNode.setSiguiente(previous.next());
-        previous.setSiguiente(newNode);
-        previous = newNode;
+        newNodo.setSiguiente(previous.next());
+        previous.setSiguiente(newNodo);
+        previous = newNodo;
 
         length++;
     }
@@ -32,7 +32,7 @@ public class LinkedList<E> {
             previous.setSiguiente(null);
             this.last = previous;
         } else {
-            Node<E> nextCurrent = this.previous.next().next();
+            Nodo<E> nextCurrent = this.previous.next().next();
             previous.setSiguiente(nextCurrent);
         }
         length--;

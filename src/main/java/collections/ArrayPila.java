@@ -1,6 +1,8 @@
 package collections;
 
-public class ArrayStack<E> implements Stack<E> {
+import collections.modelos.Pila;
+
+public class ArrayPila<E> implements Pila<E> {
     /** Tamanyo por defecto de la pila */
     protected static final int DEFAULT_SIZE = 10;
 
@@ -16,7 +18,7 @@ public class ArrayStack<E> implements Stack<E> {
     protected int length;
 
     @SuppressWarnings("unchecked")
-    public ArrayStack(){
+    public ArrayPila(){
         array = (E[]) new Object[DEFAULT_SIZE];
         length = 0;
     }
@@ -40,7 +42,7 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        if(isEmpty())
+        if(esVacia())
             return null;
 
         int index = length - 1;
@@ -53,24 +55,27 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E first() {
-        if(isEmpty())
+        if(esVacia())
             return null;
 
         return array[length - 1];
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean esVacia() {
         return length == 0;
     }
 
+    public int talla(){
+        return length;
+    }
     public static void main(String[] args) {
-        ArrayStack<Integer> stack = new ArrayStack<>();
+        ArrayPila<Integer> stack = new ArrayPila<>();
         for (int i = 0; i < 20; i++) {
             stack.push(i);
         }
 
-        while (!stack.isEmpty())
+        while (!stack.esVacia())
             System.out.println(stack.pop());
     }
 }

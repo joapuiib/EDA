@@ -1,6 +1,8 @@
 package collections;
 
-public class ArrayQueue<E> implements Queue<E> {
+import collections.modelos.Cola;
+
+public class ArrayCola<E> implements Cola<E> {
     /** Tamanyo por defecto de la cola */
     protected static final int DEFAULT_SIZE = 10;
 
@@ -14,7 +16,7 @@ public class ArrayQueue<E> implements Queue<E> {
     protected int first, last, length;
 
     @SuppressWarnings("unchecked")
-    public ArrayQueue(){
+    public ArrayCola(){
         array = (E[]) new Object[DEFAULT_SIZE];
         first = last = length = 0;
     }
@@ -40,7 +42,7 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     @Override
-    public void queue(E item) {
+    public void encolar(E item) {
         if(length == array.length) duplicateArray();
 
         array[last] = item;
@@ -50,8 +52,8 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     @Override
-    public E dequeue() {
-        if(isEmpty())
+    public E desencolar() {
+        if(esVacia())
             return null;
 
         E item = array[first];
@@ -64,15 +66,15 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     @Override
-    public E first() {
-        if(isEmpty())
+    public E primero() {
+        if(esVacia())
             return null;
 
         return array[first];
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean esVacia() {
         return length == 0;
     }
 }
