@@ -1,4 +1,4 @@
-package collections;
+package collections.implementacion.puntointeres;
 
 public class Nodo<E> {
     E objecto;

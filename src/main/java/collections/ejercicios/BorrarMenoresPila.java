@@ -1,8 +1,6 @@
 package collections.ejercicios;
 
-import collections.ListaConPIEnlazada;
-import collections.PilaPI;
-import collections.modelos.ListaConPI;
+import collections.implementacion.puntointeres.PilaPI;
 import collections.modelos.Pila;
 
 public class BorrarMenoresPila {

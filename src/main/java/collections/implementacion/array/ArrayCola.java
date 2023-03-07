@@ -1,4 +1,4 @@
-package collections;
+package collections.implementacion.array;
 
 import collections.modelos.Cola;
 

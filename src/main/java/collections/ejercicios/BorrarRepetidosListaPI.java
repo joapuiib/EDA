@@ -1,6 +1,6 @@
 package collections.ejercicios;
 
-import collections.ListaConPIEnlazada;
+import collections.implementacion.puntointeres.ListaConPIEnlazada;
 import collections.modelos.ListaConPI;
 
 public class BorrarRepetidosListaPI {

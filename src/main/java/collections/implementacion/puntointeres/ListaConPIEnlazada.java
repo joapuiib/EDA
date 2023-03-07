@@ -1,4 +1,4 @@
-package collections;
+package collections.implementacion.puntointeres;
 
 import collections.modelos.ListaConPI;
 
