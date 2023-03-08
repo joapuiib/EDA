@@ -2,12 +2,12 @@ package collections.implementacion.puntointeres;
 
 import collections.modelos.ListaConPI;
 
-public class ListaConPIEnlazada<E> implements ListaConPI<E> {
+public class LEGListaConPI<E> implements ListaConPI<E> {
 
     Nodo<E> primero, anterior, ultimo;
     int talla;
 
-    public ListaConPIEnlazada(){
+    public LEGListaConPI(){
         primero = anterior = ultimo = new Nodo<>(null);
         talla = 0;
     }
@@ -27,19 +27,13 @@ public class ListaConPIEnlazada<E> implements ListaConPI<E> {
     }
 
     @Override
-    public E eliminar() {
-        if(esFin()) {
-            return null;
-        } else {
-            E objecto = recuperar();
-
+    public void eliminar() {
+        if(!esFin()) {
             talla--;
             if (anterior.siguiente == ultimo) {
                 ultimo = anterior;
             }
             anterior.siguiente = anterior.siguiente.siguiente;
-
-            return objecto;
         }
     }
 
@@ -97,7 +91,7 @@ public class ListaConPIEnlazada<E> implements ListaConPI<E> {
     }
 
     public static void main(String[] args) {
-        ListaConPIEnlazada<Integer> lista = new ListaConPIEnlazada<>();
+        LEGListaConPI<Integer> lista = new LEGListaConPI<>();
         lista.insertar(1);
         lista.insertar(2);
         lista.insertar(3);

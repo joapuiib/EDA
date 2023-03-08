@@ -8,12 +8,12 @@ public class BorrarMenoresPila {
         if(pila.esVacia())
             return 0;
 
-        E objeto = pila.pop();
+        E objeto = pila.desapilar();
 
         int elementosBorrados = borrarMenor(pila, dato);
 
         if(objeto.compareTo(dato) >= 0){
-            pila.push(objeto);
+            pila.apilar(objeto);
         } else {
             elementosBorrados++;
         }
@@ -23,14 +23,14 @@ public class BorrarMenoresPila {
 
     public static void main(String[] args) {
         Pila<Integer> pila = new PilaPI<>();
-        pila.push(3);
-        pila.push(4);
-        pila.push(2);
-        pila.push(5);
-        pila.push(7);
-        pila.push(1);
-        pila.push(2);
-        pila.push(8);
+        pila.apilar(3);
+        pila.apilar(4);
+        pila.apilar(2);
+        pila.apilar(5);
+        pila.apilar(7);
+        pila.apilar(1);
+        pila.apilar(2);
+        pila.apilar(8);
 
         System.out.println(pila);
         System.out.println("Talla antes de borrar: " + pila.talla());

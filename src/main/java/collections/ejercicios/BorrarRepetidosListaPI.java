@@ -1,6 +1,6 @@
 package collections.ejercicios;
 
-import collections.implementacion.puntointeres.ListaConPIEnlazada;
+import collections.implementacion.puntointeres.LEGListaConPI;
 import collections.modelos.ListaConPI;
 
 public class BorrarRepetidosListaPI {
@@ -29,7 +29,7 @@ public class BorrarRepetidosListaPI {
     }
 
     public static void main(String[] args) {
-        ListaConPIEnlazada<Integer> lista = new ListaConPIEnlazada<>();
+        LEGListaConPI<Integer> lista = new LEGListaConPI<>();
         lista.insertar(1);
         lista.insertar(1);
         lista.insertar(2);

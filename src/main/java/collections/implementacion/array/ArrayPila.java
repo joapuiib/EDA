@@ -34,14 +34,14 @@ public class ArrayPila<E> implements Pila<E> {
     }
 
     @Override
-    public void push(E item) {
+    public void apilar(E item) {
         if(length == array.length) duplicateArray();
 
         array[length++] = item;
     }
 
     @Override
-    public E pop() {
+    public E desapilar() {
         if(esVacia())
             return null;
 
@@ -54,7 +54,7 @@ public class ArrayPila<E> implements Pila<E> {
     }
 
     @Override
-    public E first() {
+    public E tope() {
         if(esVacia())
             return null;
 
@@ -72,10 +72,10 @@ public class ArrayPila<E> implements Pila<E> {
     public static void main(String[] args) {
         ArrayPila<Integer> stack = new ArrayPila<>();
         for (int i = 0; i < 20; i++) {
-            stack.push(i);
+            stack.apilar(i);
         }
 
         while (!stack.esVacia())
-            System.out.println(stack.pop());
+            System.out.println(stack.desapilar());
     }
 }

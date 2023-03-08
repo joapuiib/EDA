@@ -1,11 +1,11 @@
 package collections.modelos;
 
 public interface Pila<E> {
-    void push(E item);
+    void apilar(E item);
 
-    E pop();
+    E desapilar();
 
-    E first();
+    E tope();
 
     boolean esVacia();
 

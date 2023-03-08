@@ -11,9 +11,8 @@ public interface ListaConPI<E> {// Todas las operaciones con Q(1)
     /**
      * Si !esFin(): elimina de la lista
      * el elemento en PI, que permanece inalterado
-     * @return Objeto eliminado
      */
-    E eliminar();
+    void eliminar();
 
     /**
      * Si !esFin(): obtiene el elemento en PI

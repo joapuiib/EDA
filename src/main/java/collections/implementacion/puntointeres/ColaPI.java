@@ -2,7 +2,7 @@ package collections.implementacion.puntointeres;
 
 import collections.modelos.Cola;
 
-public class ColaPI<E> extends ListaConPIEnlazada<E> implements Cola<E> {
+public class ColaPI<E> extends LEGListaConPI<E> implements Cola<E> {
     @Override
     public void encolar(E item) {
         fin();
@@ -12,7 +12,9 @@ public class ColaPI<E> extends ListaConPIEnlazada<E> implements Cola<E> {
     @Override
     public E desencolar() {
         inicio();
-        return eliminar();
+        E objeto = recuperar();
+        eliminar();
+        return objeto;
     }
 
     @Override
