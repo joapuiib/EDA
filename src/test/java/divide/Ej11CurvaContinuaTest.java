@@ -6,10 +6,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static divide.CurvaContinua.calcularK;
+import static divide.Ej11CurvaContinua.calcularK;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CurvaContinuaTest {
+class Ej11CurvaContinuaTest {
 
     @ParameterizedTest
     @MethodSource("provideArguments")

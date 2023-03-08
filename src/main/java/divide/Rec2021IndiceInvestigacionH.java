@@ -17,7 +17,7 @@ package divide;
  * Según la definición de índice h en Wikipedia: "Un investigador tiene un índice h si h de sus N trabajos
  * tienen al menos h citas cada uno, y los otros N‐h trabajos no tienen más de h citas cada uno".
  */
-public class IndiceInvestigacionH {
+public class Rec2021IndiceInvestigacionH {
 
     public static int calcularH(int[] v){
         return calcularH(v, 0, v.length - 1, 0);

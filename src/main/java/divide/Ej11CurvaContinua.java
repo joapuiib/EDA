@@ -11,7 +11,7 @@ package divide;
  *
  * Sea V = [-3, -2, -1, 1, 4, 5], k = 2
  */
-public class CurvaContinua {
+public class Ej11CurvaContinua {
 
     public static int calcularK(int[] v){
         return calcularK(v, 0, v.length - 1);
