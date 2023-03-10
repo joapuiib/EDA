@@ -1,6 +1,6 @@
-package collections.implementacion.puntointeres;
+package tema1.implementacion.puntointeres;
 
-import collections.modelos.ListaConPI;
+import tema1.modelos.ListaConPI;
 
 public class LEGListaConPI<E> implements ListaConPI<E> {
 

@@ -1,4 +1,4 @@
-package divide;
+package tema2.ejercicios;
 
 /**
  * Sea v, un array de enteros positivos, ordenado descendentemente y que puede contener valores repetidos,

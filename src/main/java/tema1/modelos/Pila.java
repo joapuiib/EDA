@@ -1,4 +1,4 @@
-package collections.modelos;
+package tema1.modelos;
 
 public interface Pila<E> {
     void apilar(E item);

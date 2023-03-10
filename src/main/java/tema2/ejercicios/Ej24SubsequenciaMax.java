@@ -1,4 +1,4 @@
-package divide;
+package tema2.ejercicios;
 
 public class Ej24SubsequenciaMax {
     public static int subSumaMax(int[] v){

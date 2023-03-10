@@ -1,6 +1,6 @@
-package collections.implementacion.array;
+package tema1.implementacion.array;
 
-import collections.modelos.Cola;
+import tema1.modelos.Cola;
 
 public class ArrayCola<E> implements Cola<E> {
     /** Tamanyo por defecto de la cola */

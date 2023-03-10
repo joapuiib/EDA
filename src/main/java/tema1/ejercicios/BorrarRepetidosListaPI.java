@@ -1,7 +1,7 @@
-package collections.ejercicios;
+package tema1.ejercicios;
 
-import collections.implementacion.puntointeres.LEGListaConPI;
-import collections.modelos.ListaConPI;
+import tema1.implementacion.puntointeres.LEGListaConPI;
+import tema1.modelos.ListaConPI;
 
 public class BorrarRepetidosListaPI {
     public static <E> int borrarRepetidos(ListaConPI<E> lista){

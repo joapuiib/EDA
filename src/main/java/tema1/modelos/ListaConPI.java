@@ -1,4 +1,4 @@
-package collections.modelos;
+package tema1.modelos;
 
 public interface ListaConPI<E> {// Todas las operaciones con Q(1)
     /**

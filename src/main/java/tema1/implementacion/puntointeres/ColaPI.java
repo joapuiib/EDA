@@ -1,6 +1,6 @@
-package collections.implementacion.puntointeres;
+package tema1.implementacion.puntointeres;
 
-import collections.modelos.Cola;
+import tema1.modelos.Cola;
 
 public class ColaPI<E> extends LEGListaConPI<E> implements Cola<E> {
     @Override

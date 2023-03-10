@@ -1,4 +1,4 @@
-package divide;
+package tema2.ejercicios;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static divide.Ej13PosicionIgualIndice.ej3;
+import static tema2.ejercicios.Ej13PosicionIgualIndice.ej3;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Ej3PosicionIgualIndiceTest {

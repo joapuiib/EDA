@@ -1,6 +1,6 @@
-package collections.implementacion.puntointeres;
+package tema1.implementacion.puntointeres;
 
-import collections.modelos.Pila;
+import tema1.modelos.Pila;
 
 public class PilaPI<E> extends LEGListaConPI<E> implements Pila<E> {
 

@@ -1,6 +1,6 @@
-package collections.implementacion.array;
+package tema1.implementacion.array;
 
-import collections.modelos.Pila;
+import tema1.modelos.Pila;
 
 public class ArrayPila<E> implements Pila<E> {
     /** Tamanyo por defecto de la pila */
