@@ -1,7 +1,7 @@
-package collections.ejercicios;
+package tema1.ejercicios;
 
-import collections.implementacion.puntointeres.PilaPI;
-import collections.modelos.Pila;
+import tema1.implementacion.puntointeres.PilaPI;
+import tema1.modelos.Pila;
 
 public class BorrarMenoresPila {
     public static <E extends Comparable<E>> int borrarMenor(Pila<E> pila, E dato){

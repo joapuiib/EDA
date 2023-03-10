@@ -1,4 +1,4 @@
-package divide;
+package tema2.ejercicios;
 
 public class Ej13PosicionIgualIndice {
     public static int ej3(int[] vector){

@@ -1,4 +1,4 @@
-package collections.modelos;
+package tema1.modelos;
 
 /**
  * La estructura de datos Cola sigue un política FIFO (First-In First-Out),

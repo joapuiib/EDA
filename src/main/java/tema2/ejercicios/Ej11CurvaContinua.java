@@ -1,4 +1,4 @@
-package divide;
+package tema2.ejercicios;
 
 /**
  * Sea v un array de enteros que se ajustan al perfil de una curva continua
