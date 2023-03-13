@@ -2,7 +2,7 @@ package tema2.sort;
 
 import java.util.Arrays;
 
-public class QuickSort {
+public class QuickSortLast {
     public static void quickSort(int[] v){
         quickSort(v, 0, v.length - 1, 0);
     }
@@ -13,7 +13,7 @@ public class QuickSort {
             int p = particion(v, i, f);
             System.out.println("P: " + p);
             print(v, i, f, depth, "After");
-            quickSort(v, i, p, depth + 1);
+            quickSort(v, i, p - 1, depth + 1);
             quickSort(v, p + 1, f, depth + 1);
         }
     }
@@ -21,7 +21,7 @@ public class QuickSort {
     public static int particion(int[] v, int i, int f){
         int p = v[f];
         int k = i;
-        for (int j = i; j <= f; j++){
+        for (int j = i; j < f; j++){
             if(v[j] < p){
                 swap(v, k++, j);
             }

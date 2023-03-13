@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tema2.sort.QuickSort.quickSort;
+import static tema2.sort.QuickSortLast.quickSort;
 
-class QuickSortTest {
+class QuickSortLastTest {
 
     @ParameterizedTest
     @MethodSource("provideArguments")
