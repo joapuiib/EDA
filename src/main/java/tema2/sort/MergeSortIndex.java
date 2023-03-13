@@ -8,7 +8,7 @@ public class MergeSortIndex {
         mergeSort(v, 0, v.length -1, 0);
     }
     public static void mergeSort(int[] v, int i, int f, int depth){
-        print(v, i, f, depth);
+        print(v, i, f, depth, "before");
         // Hay uno o ningun elemento
         if(f - i <= 0)
             return;
@@ -22,6 +22,8 @@ public class MergeSortIndex {
             mergeSort(v, m + 1, f, depth + 1);
             merge(v, i, m, f);
         }
+
+        print(v, i, f, depth, "after");
     }
 
     public static void swap(int[] v, int a, int b){
@@ -30,10 +32,10 @@ public class MergeSortIndex {
         v[b] = aux;
     }
 
-    public static void print(int v[], int i, int f, int depth){
+    public static void print(int v[], int i, int f, int depth, String msg){
         String indent = "     ".repeat(depth);
         String array = Arrays.toString(Arrays.copyOfRange(v, i, f + 1));
-        System.out.printf("%d: %s%s\n", depth, indent, array);
+        System.out.printf("%s %d: %s%s\n", msg, depth, indent, array);
     }
 
     private static void merge(int[] v, int inicio, int mitad, int fin){

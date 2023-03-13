@@ -6,10 +6,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static tema2.ejercicios.Ej11CurvaContinua.calcularK;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tema2.ejercicios.Ej12CurvaConcava.calcularK;
 
-class Ej11CurvaContinuaTest {
+class Ej12CurvaConcavaTest {
 
     @ParameterizedTest
     @MethodSource("provideArguments")
@@ -19,10 +19,9 @@ class Ej11CurvaContinuaTest {
 
     static Stream<Arguments> provideArguments(){
         return Stream.of(
-                Arguments.arguments(new int[]{-3, -2, -1, 1, 4, 5}, 2),
-                Arguments.arguments(new int[]{-1, -1, -1, -1, -1, 0, 1}, 5),
-                Arguments.arguments(new int[]{0, 1, 2, 3, 4, 5, 6}, 0),
-                Arguments.arguments(new int[]{-2, -1, 2, 3, 4, 5, 6}, 1)
+                Arguments.arguments(new int[]{4, 3, 2, 1, 2, 3, 4, 5, 6, 7}, 3),
+                Arguments.arguments(new int[]{2, 1, 2, 3, 4, 5, 6, 7}, 1),
+                Arguments.arguments(new int[]{7, 6, 5, 4, 3, 2, 1, 3, 4}, 6)
         );
     }
 }

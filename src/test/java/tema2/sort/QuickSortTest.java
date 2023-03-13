@@ -8,14 +8,14 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tema2.sort.MergeSortIndex.mergeSort;
+import static tema2.sort.QuickSort.quickSort;
 
-class MergeSortIndexTest {
+class QuickSortTest {
 
     @ParameterizedTest
     @MethodSource("provideArguments")
     void mergeSortTest(int[] v, int[] expected) {
-        mergeSort(v);
+        quickSort(v);
         String expectedString = Arrays.toString(expected);
         String sortedString = Arrays.toString(v);
         assertEquals(expectedString, sortedString);

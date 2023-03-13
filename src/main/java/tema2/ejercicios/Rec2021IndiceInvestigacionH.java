@@ -20,15 +20,17 @@ package tema2.ejercicios;
 public class Rec2021IndiceInvestigacionH {
 
     public static int calcularH(int[] v){
-        return calcularH(v, 0, v.length - 1, 0);
+        return calcularH(v, 0, v.length - 1);
     }
 
-    public static int calcularH(int[] v, int inicio, int fin, int h){
-        if(inicio > fin) return h;
-        int medio = (inicio + fin) / 2;
-        if (v[medio] >= medio + 1)
-            return calcularH(v, medio + 1, fin, medio + 1);
-        else
-            return calcularH(v, inicio, medio - 1, h);
+    public static int calcularH(int[] v, int i, int f){
+        int m = (i + f) / 2;
+        if(v[m] > m && v[m + 1] <= m){
+            return m + 1;
+        } else if(v[m] > m) {
+            return calcularH(v, m + 1, f);
+        } else {
+            return calcularH(v, i, m - 1);
+        }
     }
 }

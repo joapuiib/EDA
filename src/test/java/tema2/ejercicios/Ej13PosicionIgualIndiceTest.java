@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static tema2.ejercicios.Ej13PosicionIgualIndice.ej3;
 import static org.junit.jupiter.api.Assertions.*;
 
-class Ej3PosicionIgualIndiceTest {
+class Ej13PosicionIgualIndiceTest {
 
     @ParameterizedTest
     @MethodSource("provideArguments")
