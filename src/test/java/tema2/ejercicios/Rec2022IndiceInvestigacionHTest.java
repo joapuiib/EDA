@@ -7,9 +7,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static tema2.ejercicios.Rec2021IndiceInvestigacionH.calcularH;
+import static tema2.ejercicios.Rec2022IndiceInvestigacionH.calcularH;
 
-class Rec2021IndiceInvestigacionHTest {
+class Rec2022IndiceInvestigacionHTest {
     @ParameterizedTest
     @MethodSource("provideArguments")
     void calcularHTest(int[] v, int h) {

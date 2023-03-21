@@ -1,6 +1,6 @@
 package tema2.ejercicios;
 
-public class Parcial2021ContadorElementos {
+public class Parcial2022ContadorElementos {
     public static <E extends Comparable<E>> int contarRepetidos(E[] v, E e){
         return contarRepetidos(v, e, 0, v.length - 1);
     }
