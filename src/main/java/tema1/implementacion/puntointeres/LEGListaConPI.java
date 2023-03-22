@@ -2,6 +2,8 @@ package tema1.implementacion.puntointeres;
 
 import tema1.modelos.ListaConPI;
 
+import java.util.Objects;
+
 public class LEGListaConPI<E> implements ListaConPI<E> {
 
     Nodo<E> primero, anterior, ultimo;
@@ -74,6 +76,7 @@ public class LEGListaConPI<E> implements ListaConPI<E> {
         return talla;
     }
 
+    @Override
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("[");
@@ -88,6 +91,35 @@ public class LEGListaConPI<E> implements ListaConPI<E> {
 
         s.append("]");
         return s.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LEGListaConPI<E> that = (LEGListaConPI<E>) o;
+
+        if(this.talla() != that.talla())
+            return false;
+
+        this.inicio();
+        that.inicio();
+
+        while (!this.esFin() && !that.esFin()){
+            E e1 = this.recuperar();
+            E e2 = that.recuperar();
+            if(!e1.equals(e2))
+                return false;
+
+            this.siguiente();
+            that.siguiente();
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(talla);
     }
 
     public static void main(String[] args) {

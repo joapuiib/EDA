@@ -135,4 +135,31 @@ public class TablaHash<C, V> implements Map<C, V> {
         }
         return claves;
     }
+
+    @Override
+    public String toString(){
+        ListaConPI<C> claves = this.claves();
+        StringBuilder str = new StringBuilder();
+        str.append("{");
+        for(claves.inicio(); !claves.esFin(); claves.siguiente()){
+            C clave = claves.recuperar();
+            V valor = this.recuperar(clave);
+            str.append(String.format("%s -> %s, ", clave.toString(), valor.toString()));
+        }
+        str.append("}");
+        return str.toString();
+    }
+
+    public ListaConPI<C> colisionanCon(C c){
+        int pos = indiceHash(c);
+        ListaConPI<EntradaHash<C, V>> cubeta = elArray[pos];
+
+        ListaConPI<C> colisiones = new LEGListaConPI<>();
+        for(cubeta.inicio(); !cubeta.esFin(); cubeta.siguiente()){
+            C clave = cubeta.recuperar().clave;
+            if(!clave.equals(c))
+                colisiones.insertar(clave);
+        }
+        return colisiones;
+    }
 }
