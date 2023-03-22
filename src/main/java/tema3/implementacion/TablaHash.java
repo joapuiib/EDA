@@ -141,15 +141,24 @@ public class TablaHash<C, V> implements Map<C, V> {
         ListaConPI<C> claves = this.claves();
         StringBuilder str = new StringBuilder();
         str.append("{");
-        for(claves.inicio(); !claves.esFin(); claves.siguiente()){
+
+        claves.inicio();
+        while(!claves.esFin()){
             C clave = claves.recuperar();
             V valor = this.recuperar(clave);
-            str.append(String.format("%s -> %s, ", clave.toString(), valor.toString()));
+            str.append(String.format("<%s => %s>", clave.toString(), valor.toString()));
+            claves.siguiente();
+
+            if(!claves.esFin())
+                str.append(", ");
         }
         str.append("}");
         return str.toString();
     }
 
+    /**
+     * Ejercicio del parcial 2015
+     */
     public ListaConPI<C> colisionanCon(C c){
         int pos = indiceHash(c);
         ListaConPI<EntradaHash<C, V>> cubeta = elArray[pos];

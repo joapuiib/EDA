@@ -6,6 +6,30 @@ import tema3.implementacion.TablaHash;
 import tema3.modelos.Map;
 
 public class Rec2021DiferenciaSalario {
+
+    public static class Empleado {
+        private String nombre;
+        private double salario;
+
+        public Empleado(String nombre, double salario) {
+            this.nombre = nombre;
+            this.salario = salario;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public double getSalario() {
+            return salario;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("(%s, %.2f)", nombre, salario);
+        }
+    }
+
     public static ListaConPI<Empleado> diferenciaSalario(ListaConPI<Empleado> l1, ListaConPI<Empleado> l2){
         ListaConPI<Empleado> l3 = new LEGListaConPI<>();
         Map<String, Double> aux = new TablaHash<>(10);
