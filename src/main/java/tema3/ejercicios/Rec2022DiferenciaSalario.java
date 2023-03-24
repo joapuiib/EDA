@@ -5,7 +5,7 @@ import tema1.modelos.ListaConPI;
 import tema3.implementacion.TablaHash;
 import tema3.modelos.Map;
 
-public class Rec2021DiferenciaSalario {
+public class Rec2022DiferenciaSalario {
 
     public static class Empleado {
         private String nombre;
@@ -32,26 +32,27 @@ public class Rec2021DiferenciaSalario {
 
     public static ListaConPI<Empleado> diferenciaSalario(ListaConPI<Empleado> l1, ListaConPI<Empleado> l2){
         ListaConPI<Empleado> l3 = new LEGListaConPI<>();
-        Map<String, Double> aux = new TablaHash<>(10);
+        Map<String, Double> map = new TablaHash<>(l1.talla());
 
-        l1.inicio();
-        while (!l1.esFin()){
+        for(l1.inicio(); !l1.esFin(); l1.siguiente()){
             Empleado e = l1.recuperar();
-            aux.insertar(e.getNombre(), e.getSalario());
-            l1.siguiente();
+            String nombre = e.getNombre();
+            double salario = e.getSalario();
+            map.insertar(nombre, salario);
         }
 
-        l2.inicio();
-        while (!l2.esFin()){
+        for(l2.inicio(); !l2.esFin(); l2.siguiente()){
             Empleado e = l2.recuperar();
-            Double salarioAnterior = aux.recuperar(e.getNombre());
+            String nombre = e.getNombre();
+            double salario = e.getSalario();
+            Double salarioAnterior = map.recuperar(nombre); // O(1)
+
+            // Si salarioAnterior == null significa que no hay un salario para ese nombre
             if(salarioAnterior != null){
-                double diferencia = e.getSalario() - salarioAnterior;
-                if(diferencia != 0){
-                    l3.insertar(new Empleado(e.getNombre(), diferencia));
-                }
+                double diferencia = salario - salarioAnterior;
+                if(diferencia != 0)
+                    l3.insertar(new Empleado(nombre, diferencia));
             }
-            l2.siguiente();
         }
         return l3;
     }
