@@ -9,6 +9,14 @@ public class EntradaHash<C, V> {
         this.valor = valor;
     }
 
+    public C getClave() {
+        return clave;
+    }
+
+    public V getValor() {
+        return valor;
+    }
+
     @Override
     public String toString() {
         return "<" + clave + ", " + valor + '>';

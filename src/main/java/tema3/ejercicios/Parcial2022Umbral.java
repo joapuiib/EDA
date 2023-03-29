@@ -8,20 +8,21 @@ import tema3.modelos.Map;
 public class Parcial2022Umbral {
     public static ListaConPI<String> superanUmbral(ListaConPI<String> telefonos, int umbral){
         ListaConPI<String> superanUmbral = new LEGListaConPI<>();
-        Map<String, Integer> contadorOcurrencias = new TablaHash<>(telefonos.talla());
+        Map<String, Integer> m = new TablaHash<>(telefonos.talla());
 
         for (telefonos.inicio(); !telefonos.esFin(); telefonos.siguiente()){
             String telefono = telefonos.recuperar();
-            Integer ocurrenciasAnteriores = contadorOcurrencias.recuperar(telefono);
+            Integer frec = m.recuperar(telefono);
 
-            if(ocurrenciasAnteriores != null){
-                ocurrenciasAnteriores++;
-
-                if(ocurrenciasAnteriores == umbral)
-                    superanUmbral.insertar(telefono);
+            if(frec != null){
+                frec++;
+            } else {
+                frec = 1;
             }
+            m.insertar(telefono, frec);
 
-            contadorOcurrencias.insertar(telefono, ocurrenciasAnteriores);
+            if(frec == umbral)
+                superanUmbral.insertar(telefono);
         }
 
         return superanUmbral;

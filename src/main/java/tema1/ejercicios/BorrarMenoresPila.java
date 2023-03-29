@@ -1,6 +1,6 @@
 package tema1.ejercicios;
 
-import tema1.implementacion.puntointeres.PilaPI;
+import tema1.implementacion.puntointeres.LEGPila;
 import tema1.modelos.Pila;
 
 public class BorrarMenoresPila {
@@ -22,7 +22,7 @@ public class BorrarMenoresPila {
     }
 
     public static void main(String[] args) {
-        Pila<Integer> pila = new PilaPI<>();
+        Pila<Integer> pila = new LEGPila<>();
         pila.apilar(3);
         pila.apilar(4);
         pila.apilar(2);

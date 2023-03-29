@@ -2,7 +2,7 @@ package tema1.implementacion.puntointeres;
 
 import tema1.modelos.Pila;
 
-public class PilaPI<E> extends LEGListaConPI<E> implements Pila<E> {
+public class LEGPila<E> extends LEGListaConPI<E> implements Pila<E> {
 
     @Override
     public void apilar(E item) {
@@ -25,7 +25,7 @@ public class PilaPI<E> extends LEGListaConPI<E> implements Pila<E> {
     }
 
     public static void main(String[] args) {
-        PilaPI<String> pila = new PilaPI<>();
+        LEGPila<String> pila = new LEGPila<>();
         pila.apilar("Item1");
         pila.apilar("Item2");
         pila.apilar("Item3");

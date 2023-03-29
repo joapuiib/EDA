@@ -2,7 +2,7 @@ package tema1.implementacion.puntointeres;
 
 import tema1.modelos.Cola;
 
-public class ColaPI<E> extends LEGListaConPI<E> implements Cola<E> {
+public class LEGCola<E> extends LEGListaConPI<E> implements Cola<E> {
     @Override
     public void encolar(E item) {
         fin();
@@ -24,7 +24,7 @@ public class ColaPI<E> extends LEGListaConPI<E> implements Cola<E> {
     }
 
     public static void main(String[] args) {
-        ColaPI<String> cola = new ColaPI<>();
+        LEGCola<String> cola = new LEGCola<>();
         cola.encolar("Item1");
         cola.encolar("Item2");
         cola.encolar("Item3");
