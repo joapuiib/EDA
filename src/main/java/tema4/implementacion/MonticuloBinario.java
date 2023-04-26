@@ -3,6 +3,8 @@ package tema4.implementacion;
 import tema1.implementacion.puntointeres.LEGListaConPI;
 import tema4.modelos.ColaPrioridad;
 
+import java.util.Arrays;
+
 public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<E> {
 
     protected static final int CAPACIDAD_POR_DEFECTO = 100;
@@ -98,5 +100,157 @@ public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<
                 return true;
         }
         return false;
+    }
+
+    public boolean estaEn(E e){
+        return estaEn(e, 1);
+    }
+    private boolean estaEn(E e, int i){
+        if(i > talla)
+            return false;
+        int cmp = e.compareTo(elArray[i]);
+        if(cmp == 0)
+            return true;
+        else if(cmp < 0)
+            return false;
+        else
+            return estaEn(e, i * 2) || estaEn(e, i * 2 + 1);
+    }
+
+    public void borrarHojasenRango(E x, E y){
+        for (int i = talla / 2 + 1; i <= talla; i++) {
+            E e = elArray[i];
+            int cmpX = e.compareTo(x);
+            int cmpY = e.compareTo(y);
+            if(cmpX >= 0 && cmpY <= 0){
+                if(i < talla) {
+                    E ultim = elArray[talla];
+                    int posIns = reflotar(ultim, i);
+                    elArray[posIns] = ultim;
+                }
+                elArray[talla--] = null;
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        String elArrayStr = Arrays.toString(Arrays.copyOfRange(elArray, 1, talla + 1));
+        return elArrayStr;
+    }
+
+    public E eliminar(int k) {
+        E eliminado = elArray[k];
+        elArray[k] = elArray[talla];
+        elArray[talla--] = null;
+        hundir(k);
+        return eliminado;
+    }
+
+    public int igualesAlMinimo(){
+        if(talla == 0)
+            return 0;
+        else
+            return iguales(recuperarMin(), 1);
+    }
+    public int iguales(E e, int i){
+        if(i > talla)
+            return 0;
+        int cmp = e.compareTo(elArray[i]);
+        if(cmp > 0){
+            return 0;
+        } else {
+            int num = 0;
+            if(cmp == 0)
+                num++;
+
+            int izq = iguales(e, i * 2);
+            int der = iguales(e, i * 2 + 1);
+            return num + izq + der;
+        }
+    }
+
+    public static <E extends Comparable<E>> boolean esHeap(E[] v){
+        int talla = v.length;
+        for (int i = 1; i <= (talla / 2); i++) {
+            E pare = v[i - 1];
+
+            E izq = v[i * 2 - 1];
+            if(pare.compareTo(izq) > 0)
+                return false;
+
+            if (i * 2 < talla) {
+                E der = v[i * 2];
+                if(pare.compareTo(der) > 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+    public int menoresQue(E e){
+        return menoresQue(e, 1);
+    }
+    private int menoresQue(E e, int i) {
+        if (i > talla)
+            return 0;
+        int cmp = e.compareTo(elArray[i]);
+        if (cmp > 0) {
+            int izq = menoresQue(e, i * 2);
+            int der = menoresQue(e, i * 2 + 1);
+            return 1 + izq + der;
+        } else {
+            return 0;
+        }
+    }
+
+    public E eliminar1Hoja(){
+        int pos1Hoja = talla / 2 + 1;
+        // return eliminar(pos1Hoja);
+        E hoja = elArray[pos1Hoja];
+        elArray[pos1Hoja] = elArray[talla];
+        elArray[talla--] = null;
+        return hoja;
+    }
+
+    public boolean valido(E e){
+        return e.hashCode() % 2 == 0;
+    }
+
+    public void eliminarNoValidos(){
+        int i = 1;
+        // Recorremos el montículo entero
+        while (i <= talla){
+            // Eliminamos los elementos "no validos"
+            if(!valido(elArray[i])){
+                elArray[i] = elArray[talla];
+                elArray[talla--] = null;
+            } else {
+                i++;
+            }
+        }
+
+        for (int j = talla / 2; j >= 1 ; j--) {
+            hundir(j);
+        }
+        /*
+        for (int j = talla / 2 + 1; j <= talla ; j++) {
+            E e = elArray[j];
+            int posIns = reflotar(e, j);
+            elArray[posIns] = e;
+        }
+        */
+    }
+
+    public boolean esValidoAppend(MonticuloBinario<E> mb){
+        int j = 1;
+        for (int i = talla / 2 + 1; i <= talla; i++) {
+            for (int k = 0; k < 2; k++) {
+                int cmp = elArray[i].compareTo(mb.elArray[j]);
+                if(cmp > 0)
+                    return false;
+                j++;
+            }
+        }
+        return true;
     }
 }
