@@ -48,7 +48,8 @@ public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<
         // PASO 1: Borrar el mínimo del Heap
         // (a) Preservar la Propiedad Estructural:
         // borrar “Por Niveles” el mínimo
-        elArray[1] = elArray[talla--];
+        elArray[1] = elArray[talla];
+        elArray[talla--] = null;
         // (b) Preservar la Propiedad de Orden:
         // buscar posición de inserción ordenada de elArray[1]
         // PASO 2: Insertar elArray[1] en su posición ordenada
