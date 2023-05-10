@@ -10,12 +10,10 @@ public class teoriaProblema1 {
         ListaConPI<EntradaMap<C, V>> l = new LEGListaConPI<>();
 
         EntradaMap<C, V> min = mo.recuperarEntradaMin();
-        l.insertar(min);
 
-        while(l.talla() < mo.talla()){
-            EntradaMap<C, V> next = mo.sucesorEntrada(min.getClave());
-            l.insertar(next);
-            min = next;
+        while(min != null){
+            l.insertar(min);
+            min = mo.sucesorEntrada(min.getClave());
         }
 
         return l;

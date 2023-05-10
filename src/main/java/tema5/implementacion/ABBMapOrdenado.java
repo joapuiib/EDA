@@ -1,9 +1,11 @@
 package tema5.implementacion;
 
+import tema1.implementacion.puntointeres.LEGListaConPI;
 import tema1.modelos.ListaConPI;
+import tema3.modelos.Map;
 import tema5.modelos.MapOrdenado;
 
-public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C, V> {
+public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C, V>, Map<C, V> {
     protected ABB<EntradaMap<C, V>> abb;
 
     public ABBMapOrdenado(){
@@ -24,23 +26,26 @@ public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C
 
     @Override
     public V insertar(C c, V v) {
-        EntradaMap<C, V> old = abb.recuperar(new EntradaMap<>(c, null));
-        abb.insertar(new EntradaMap<>(c, v));
+        EntradaMap<C, V> old = abb.insertar(new EntradaMap<>(c, v));
         return old == null ? null : old.getValor();
     }
 
     @Override
     public V eliminar(C c) {
-        EntradaMap<C, V> old = abb.recuperar(new EntradaMap<>(c, null));
-        abb.eliminar(new EntradaMap<>(c, null));
+        EntradaMap<C, V> old = abb.eliminar(new EntradaMap<>(c, null));
         return old == null ? null : old.getValor();
     }
 
     @Override
     public ListaConPI<C> claves() {
-        return null;
+        ListaConPI<C> claves = new LEGListaConPI<>();
+        EntradaMap<C, V> actual = abb.recuperarMin();
+        while(actual != null){
+            claves.insertar(actual.getClave());
+            actual = abb.sucesor(actual);
+        }
+        return claves;
     }
-
 
     @Override
     public EntradaMap<C, V> recuperarEntradaMin() {
@@ -55,12 +60,13 @@ public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C
 
     @Override
     public EntradaMap<C, V> recuperarEntradaMax() {
-        return null;
+        return abb.recuperarMax();
     }
 
     @Override
     public C recuperarMax() {
-        return null;
+        EntradaMap<C, V> max = recuperarEntradaMax();
+        return max == null ? null : max.getClave();
     }
 
     @Override
@@ -76,11 +82,12 @@ public class ABBMapOrdenado<C extends Comparable<C>, V> implements MapOrdenado<C
 
     @Override
     public EntradaMap<C, V> predecesorEntrada(C c) {
-        return null;
+        return abb.predecesor(new EntradaMap<>(c, null));
     }
 
     @Override
     public C predecesor(C c) {
-        return null;
+        EntradaMap<C, V> predecesor = predecesorEntrada(c);
+        return predecesor == null ? null : predecesor.getClave();
     }
 }

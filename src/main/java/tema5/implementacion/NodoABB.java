@@ -10,4 +10,9 @@ public class NodoABB<E> {
         talla = 1;
         izq = der = null;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s<%s, %s>", dato.toString(), izq == null ? "null" : izq.dato, der == null ? "null" : der.dato);
+    }
 }
