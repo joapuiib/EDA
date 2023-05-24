@@ -436,31 +436,27 @@ public class ABB<E extends Comparable<E>>{
         return caminosAHojas(raiz, e, "");
     }
 
-    protected String caminosAHojas(NodoABB<E> actual, E e, String caminoActual){
-        if (actual == null) {
+    protected String caminosAHojas(NodoABB<E> actual, E e, String camino){
+        if (actual == null)
             return "";
-        }
-        caminoActual += " " + actual.dato.toString();
 
+        camino += " " + actual.dato;
         int cmp = e.compareTo(actual.dato);
-        if(cmp >= 0) {
-            return caminosAHojas(actual.der, e, caminoActual);
+        if (cmp < 0){
+            if (actual.izq == null && actual.der == null)
+                return camino.trim() + "\n";
+
+            String izq = caminosAHojas(actual.izq, e, camino);
+            String der = caminosAHojas(actual.der, e, camino);
+            return izq + der;
         } else {
-            if (actual.der == null && actual.izq == null)
-                return caminoActual.trim();
-            String izq = caminosAHojas(actual.izq, e, caminoActual);
-            String der = caminosAHojas(actual.der, e, caminoActual);
-            if (!izq.isEmpty() && !der.isEmpty())
-                return izq + "\n" + der;
-            else if(!izq.isEmpty())
-                return izq;
-            else if(!der.isEmpty())
-                return der;
-            else
-                return "";
+            return caminosAHojas(actual.der, e, camino);
         }
     }
 
+    /**
+     * 1r Parcial 2019
+     */
     public E lowestCommonAncestor(E e1, E e2){
         return lowestCommonAncestor(raiz, e1, e2);
     }
@@ -480,4 +476,90 @@ public class ABB<E extends Comparable<E>>{
 
         return lowestCommonAncestor(actual.izq, e1, e2);
     }
+
+    /**
+     * 1r Parcial 2017
+     */
+    public void addMinimo(E e){
+        NodoABB<E> nuevo = new NodoABB<>(e);
+        if (raiz == null)
+            raiz = nuevo;
+        else {
+            NodoABB<E> actual = raiz;
+            while (actual.izq != null) {
+                actual.talla++;
+                actual = actual.izq;
+            }
+            actual.izq = nuevo;
+        }
+    }
+
+    /**
+     * 1r Parcial 2016
+     */
+    public int igualesQue(E e){
+        return igualesQue(raiz, e);
+    }
+    protected int igualesQue(NodoABB<E> actual, E e){
+        if (actual == null)
+            return 0;
+
+        int cmp = e.compareTo(actual.dato);
+        if (cmp < 0)
+            return igualesQue(actual.izq, e);
+        else if(cmp == 0)
+            return 1 + igualesQue(actual.izq, e);
+        else {
+            return igualesQue(actual.der, e);
+        }
+    }
+
+    /**
+     * Recuperación 1r Parcial 2016
+     */
+    public ListaConPI<E> caminoHasta(E e){
+        ListaConPI<E> l = new LEGListaConPI<>();
+        return caminoHasta(raiz, e, l);
+    }
+
+    protected ListaConPI<E> caminoHasta(NodoABB<E> actual, E e, ListaConPI<E> l){
+        if (actual == null)
+            return null;
+
+        l.insertar(actual.dato);
+
+        int cmp = e.compareTo(actual.dato);
+        if (cmp < 0){
+            return caminoHasta(actual.izq, e, l);
+        } else if (cmp == 0){
+            return l;
+        } else {
+            return caminoHasta(actual.der, e, l);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

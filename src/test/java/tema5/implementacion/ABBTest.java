@@ -246,9 +246,9 @@ class ABBTest {
 
         @ParameterizedTest
         @CsvSource(value = {
-                "0, 5 2 1\\n5 2 3\\n5 7 9",
-                "2, 5 2 3\\n5 7 9",
-                "5, 5 7 9",
+                "0, 5 2 1\\n5 2 3\\n5 7 9\\n",
+                "2, 5 2 3\\n5 7 9\\n",
+                "5, 5 7 9\\n",
                 "10, ",
         }, emptyValue="")
         void caminosAHojas(Integer e, String expectedCamins){
