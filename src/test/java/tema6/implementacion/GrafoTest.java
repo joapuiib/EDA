@@ -31,6 +31,6 @@ class GrafoTest {
     }
     @Test
     void toArrayBFS(){
-        assertEquals("[0, 1, 3, 4, 2, 5]", Arrays.toString(gd.toArrayDFS()));
+        assertEquals("[0, 1, 3, 4, 2, 5]", Arrays.toString(gd.toArrayBFS()));
     }
 }

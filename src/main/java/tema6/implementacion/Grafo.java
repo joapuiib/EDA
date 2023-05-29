@@ -99,4 +99,29 @@ public abstract class Grafo {
             }
         }
     }
+
+    public int[] ordenTopologicoDFS() {
+        int[] res = new int[numVertices()];
+        ordenVisita = numVertices() - 1;
+        visitados = new int[numVertices()];
+        for (int v = 0; v < numVertices(); v++) {
+            if (visitados[v] == 0) { ordenTopologicoDFS(v, res); }
+        }
+        return res;
+    }
+
+    public void ordenTopologicoDFS(int origen, int[] res) {
+        visitados[origen] = 1;
+
+        ListaConPI<Adyacente> adyacentes = adyacentesDe(origen);
+        for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()) {
+            Adyacente a = adyacentes.recuperar();
+            int destino = a.getDestino();
+            if (visitados[destino] == 0) {
+                ordenTopologicoDFS(destino, res);
+            }
+        }
+
+        res[ordenVisita--] = origen;
+    }
 }

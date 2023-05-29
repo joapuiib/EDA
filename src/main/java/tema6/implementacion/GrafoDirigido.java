@@ -58,14 +58,18 @@ public class GrafoDirigido extends Grafo{
 
     @Override
     public void insertarArista(int i, int j) {
-        if (!existeArista(i, j)){
-            adyacentesDe(i).insertar(new Adyacente(j, 1));
-            numA++;
-        }
+        insertarArista(i, j, 1);
     }
 
     @Override
     public void insertarArista(int i, int j, double p) {
+        if (!existeArista(i, j)){
+            adyacentesDe(i).insertar(new Adyacente(j, p));
+            numA++;
+        }
+    }
+
+    public void insertarActualizarArista(int i, int j, double p) {
         ListaConPI<Adyacente> adyacentes = adyacentesDe(i);
         for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
             Adyacente a = adyacentes.recuperar();
@@ -107,6 +111,8 @@ public class GrafoDirigido extends Grafo{
         }
         return grado;
     }
+
+
     public int gradoEntrada() {
         int[] grado = new int[numVertices()];
 
