@@ -1,25 +1,24 @@
 package tema6.implementacion;
 
 import tema1.implementacion.puntointeres.LEGCola;
+import tema1.implementacion.puntointeres.LEGListaConPI;
 import tema1.modelos.Cola;
 import tema1.modelos.ListaConPI;
 
+import java.util.Arrays;
+
 public abstract class Grafo {
 
-    /**
-     * Variable auxiliar per a DFS
-     */
+    /** Variable auxiliar per a DFS */
     protected int[] visitados;
-    /**
-     * Variable auxiliar per a DFS
-     */
+    /** Variable auxiliar per a DFS */
     protected int ordenVisita;
 
 
-    /**
-     * Cola auxiliar per al BFS
-     */
+    /** Cola auxiliar per al BFS */
     protected Cola<Integer> q;
+
+    private final int INFINITO = Integer.MAX_VALUE;
 
     public abstract int numVertices();
     public abstract int numAristas();
@@ -28,6 +27,12 @@ public abstract class Grafo {
     public abstract void insertarArista(int i, int j);
     public abstract void insertarArista(int i, int j, double p);
     public abstract ListaConPI<Adyacente> adyacentesDe(int i);
+
+    public abstract int getVerticeReceptivo();
+    public abstract boolean esSumidero(int v);
+    public abstract int getSumideroUniversal();
+    public abstract int getFuenteUniversal();
+    public abstract boolean esCompleto();
 
     @Override
     public String toString(){
@@ -124,4 +129,62 @@ public abstract class Grafo {
 
         res[ordenVisita--] = origen;
     }
+
+    public int distanciaMin(int v, int w){
+        int[] distancias = new int[numVertices()];
+        Arrays.fill(distancias, INFINITO);
+
+        q = new LEGCola<>();
+        distancias[v] = 0;
+        q.encolar(v);
+
+        while (!q.esVacia()){
+            int actual = q.desencolar();
+            int distanciaActual = distancias[actual];
+            ListaConPI<Adyacente> adyacentes = adyacentesDe(actual);
+            for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
+                Adyacente a = adyacentes.recuperar();
+                if (distancias[a.destino] == INFINITO){
+                    distancias[a.destino] = distanciaActual + 1;
+                    q.encolar(a.destino);
+                    if (a.destino == w)
+                        return distancias[w];
+                }
+            }
+        }
+        return distancias[w];
+    }
+
+    public ListaConPI<Integer> caminoMin(int v, int w){
+        int[] camino = new int[numVertices()];
+        Arrays.fill(camino, -1);
+
+        q = new LEGCola<>();
+        q.encolar(v);
+
+        boolean encontrado = false;
+        while (!q.esVacia() && !encontrado){
+            int actual = q.desencolar();
+            ListaConPI<Adyacente> adyacentes = adyacentesDe(actual);
+            for (adyacentes.inicio(); !adyacentes.esFin() && !encontrado; adyacentes.siguiente()){
+                Adyacente a = adyacentes.recuperar();
+                if (camino[a.destino] == -1){
+                    camino[a.destino] = actual;
+                    q.encolar(a.destino);
+                    if (a.destino == w)
+                        encontrado = true;
+                }
+            }
+        }
+
+        ListaConPI<Integer> res = new LEGListaConPI<>();
+        int actual = w;
+        while (actual != -1){
+            res.inicio();
+            res.insertar(actual);
+            actual = camino[actual];
+        }
+        return res;
+    }
+
 }
