@@ -22,13 +22,22 @@ public class GrafoNoDirigido extends GrafoDirigido {
     /**
      * Exercici 1.4
      */
-    public int getVerticeReceptivo(){
+    public int getVerticeReceptivo() {
         for (int i = 0; i < numVertices(); i++) {
-            if (gradoEntrada(i) == numVertices() - 1)
+            if (adyacentesDe(i).talla() == numVertices() - 1)
                 return i;
         }
         return -1;
     }
+
+
+
+
+
+
+
+
+
 
     /**
      * Exercici 1.4

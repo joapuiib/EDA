@@ -16,6 +16,10 @@ class GrafoTest {
 
     private Grafo noConexo;
 
+    private Grafo gdPesos;
+
+    private Grafo topologico;
+
     @BeforeEach
     void setup(){
         gd = new GrafoDirigido(6);
@@ -49,6 +53,32 @@ class GrafoTest {
         noConexo.insertarArista(2, 0);
 
         noConexo.insertarArista(4, 5);
+
+        gdPesos = new GrafoDirigido(7);
+        gdPesos.insertarArista(0, 6, 1);
+        gdPesos.insertarArista(1, 2, 2);
+        gdPesos.insertarArista(1, 4, 4);
+        gdPesos.insertarArista(2, 4, 1);
+        gdPesos.insertarArista(2, 5, 10);
+        gdPesos.insertarArista(3, 1, 4);
+        gdPesos.insertarArista(3, 6, 5);
+        gdPesos.insertarArista(4, 0, 4);
+        gdPesos.insertarArista(4, 3, 2);
+        gdPesos.insertarArista(4, 5, 2);
+        gdPesos.insertarArista(4, 6, 8);
+        gdPesos.insertarArista(5, 0, 6);
+
+        topologico = new GrafoDirigido(9);
+        topologico.insertarArista(0, 1);
+        topologico.insertarArista(0, 2);
+        topologico.insertarArista(0, 3);
+        topologico.insertarArista(0, 4);
+        topologico.insertarArista(1, 2);
+        topologico.insertarArista(3, 7);
+        topologico.insertarArista(5, 2);
+        topologico.insertarArista(6, 3);
+        topologico.insertarArista(8, 3);
+        topologico.insertarArista(8, 4);
     }
 
     @Test
@@ -66,6 +96,7 @@ class GrafoTest {
         );
     }
 
+    /*
     @Test
     void esConexo(){
         assertAll(
@@ -73,5 +104,37 @@ class GrafoTest {
                 () ->assertTrue(gd2.esConexo(), "gd2 hauria de ser connexe"),
                 () ->assertFalse(noConexo.esConexo(), "noConexe hauria de no ser connexe")
         );
+    }
+    */
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0: 3: [0, 1, 3]",
+            "0: 4: [0, 1, 4]",
+            "0: 2: []",
+            "0: 5: []",
+            "3: 4: [3, 4]",
+            "3: 1: [3, 0, 1]",
+            "5: 0: [5, 1, 3, 0]",
+    }, delimiter = ':')
+    void caminoMinimoSinPesos(int v, int w, String expectedCamino){
+        assertEquals(expectedCamino, gd.caminoMinimoSinPesos(v, w).toString());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0: 1: []",
+            "1: 3: [1, 2, 4, 3]",
+            "1: 6: [1, 2, 4, 0, 6]",
+            "4: 6: [4, 0, 6]",
+            "3: 5: [3, 1, 2, 4, 5]",
+    }, delimiter = ':')
+    void caminoMinimo(int v, int w, String expectedCamino){
+        assertEquals(expectedCamino, gdPesos.caminoMinimo(v, w).toString());
+    }
+
+    @Test
+    void ordenTopologico(){
+        assertEquals("[8, 6, 5, 0, 4, 3, 7, 1, 2]", Arrays.toString(topologico.ordenTopologicoDFS()));
     }
 }

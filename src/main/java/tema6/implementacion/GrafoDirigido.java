@@ -131,18 +131,9 @@ public class GrafoDirigido extends Grafo{
         return gradoMax;
     }
 
-    /**
-     * Exercici 1.3
-     */
-    public int grado() {
+    public int[] gradosEntrada() {
         int[] grados = new int[numVertices()];
 
-        // Grado Salida
-        for (int i = 0; i < numVertices(); i++) {
-            grados[i] = gradoSalida(i);
-        }
-
-        // Grado entrada eficient, nomes recorrec 1 volta
         for (int i = 0; i < numVertices(); i++) {
             ListaConPI<Adyacente> adyacentes = adyacentesDe(i);
             for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
@@ -151,58 +142,60 @@ public class GrafoDirigido extends Grafo{
             }
         }
 
-        int gradoMax = grados[0];
-        for (int i = 1; i < numVertices(); i++) {
+        return grados;
+    }
+
+    /**
+     * Exercici 1.3
+     */
+    public int grado(){
+        int[] grados = gradosEntrada();
+
+        // Grado salida
+        for (int i = 0; i < numVertices(); i++) {
+            grados[i] = adyacentesDe(i).talla();
+        }
+
+        // Calculamos el grado máximo
+        int gradoMax = 0;
+        for (int i = 0; i < numVertices(); i++) {
             if (gradoMax < grados[i])
                 gradoMax = grados[i];
         }
-
         return gradoMax;
     }
 
     /**
      * Exercici 1.3
      */
-    public double aristaMayorPeso() {
+    public double aristaMayorPeso(){
         double pesoMax = 0;
         for (int i = 0; i < numVertices(); i++) {
-            ListaConPI<Adyacente> adyacentes = adyacentesDe(i);
-            for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
-                Adyacente a = adyacentes.recuperar();
-                if (pesoMax < a.getPeso())
+            ListaConPI<Adyacente> l = adyacentesDe(i);
+            for (l.inicio(); !l.esFin(); l.siguiente()){
+                Adyacente a = l.recuperar();
+                if (a.getPeso() > pesoMax)
                     pesoMax = a.getPeso();
             }
         }
-
         return pesoMax;
     }
 
     /**
      * Exercici 1.3
      */
-    public boolean esRegular() {
-        int[] grados = new int[numVertices()];
+    public boolean esRegular(){
+        int[] grados = gradosEntrada();
 
-        // Grado Salida
+        // Grado salida
         for (int i = 0; i < numVertices(); i++) {
-            grados[i] = gradoSalida(i);
+            grados[i] = adyacentesDe(i).talla();
         }
 
-        // Grado entrada eficient, nomes recorrec 1 volta
-        for (int i = 0; i < numVertices(); i++) {
-            ListaConPI<Adyacente> adyacentes = adyacentesDe(i);
-            for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
-                Adyacente a = adyacentes.recuperar();
-                grados[a.destino]++;
-            }
-        }
-
-        int grado = grados[0];
         for (int i = 1; i < numVertices(); i++) {
-            if (grado != grados[i])
+            if (grados[i] != grados[i - 1])
                 return false;
         }
-
         return true;
     }
 
@@ -210,16 +203,7 @@ public class GrafoDirigido extends Grafo{
      * Exercici 1.4
      */
     public int getVerticeReceptivo(){
-        int[] grados = new int[numVertices()];
-
-        // Grados d'entrada
-        for (int i = 0; i < numVertices(); i++) {
-            ListaConPI<Adyacente> l = adyacentesDe(i);
-            for (l.inicio(); !l.esFin(); l.siguiente()){
-                Adyacente a = l.recuperar();
-                grados[a.getDestino()]++;
-            }
-        }
+        int[] grados = gradosEntrada();
 
         for (int i = 0; i < numVertices(); i++) {
             if (grados[i] == numVertices() - 1)
@@ -239,16 +223,7 @@ public class GrafoDirigido extends Grafo{
      * Exercici 1.4
      */
     public int getSumideroUniversal(){
-        int[] gradosEntrada = new int[numVertices()];
-
-        // Grados d'entrada
-        for (int i = 0; i < numVertices(); i++) {
-            ListaConPI<Adyacente> l = adyacentesDe(i);
-            for (l.inicio(); !l.esFin(); l.siguiente()){
-                Adyacente a = l.recuperar();
-                gradosEntrada[a.getDestino()]++;
-            }
-        }
+        int[] gradosEntrada = gradosEntrada();
 
         for (int i = 0; i < numVertices(); i++) {
             if (gradosEntrada[i] == numVertices() - 1 && gradoSalida(i) == 0)
@@ -261,16 +236,7 @@ public class GrafoDirigido extends Grafo{
      * Exercici 1.4
      */
     public int getFuenteUniversal(){
-        int[] gradosEntrada = new int[numVertices()];
-
-        // Grados d'entrada
-        for (int i = 0; i < numVertices(); i++) {
-            ListaConPI<Adyacente> l = adyacentesDe(i);
-            for (l.inicio(); !l.esFin(); l.siguiente()){
-                Adyacente a = l.recuperar();
-                gradosEntrada[a.getDestino()]++;
-            }
-        }
+        int[] gradosEntrada = gradosEntrada();
 
         for (int i = 0; i < numVertices(); i++) {
             if (gradosEntrada[i] == 0 && gradoSalida(i) == numVertices() - 1)
@@ -283,8 +249,10 @@ public class GrafoDirigido extends Grafo{
      * Exercici 1.4
      */
     public boolean esCompleto(){
+        int[] gradosEntrada = gradosEntrada();
+
         for (int i = 0; i < numVertices(); i++) {
-            if (gradoSalida(i) != numVertices() - 1)
+            if (gradoSalida(i) + gradosEntrada[i] != numVertices() - 1)
                 return false;
         }
         return true;

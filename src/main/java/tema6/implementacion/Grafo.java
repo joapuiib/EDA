@@ -1,9 +1,12 @@
 package tema6.implementacion;
 
+import tema1.implementacion.array.ArrayCola;
 import tema1.implementacion.puntointeres.LEGCola;
 import tema1.implementacion.puntointeres.LEGListaConPI;
 import tema1.modelos.Cola;
 import tema1.modelos.ListaConPI;
+import tema4.implementacion.MonticuloBinario;
+import tema4.modelos.ColaPrioridad;
 
 import java.util.Arrays;
 
@@ -17,8 +20,9 @@ public abstract class Grafo {
 
     /** Cola auxiliar per al BFS */
     protected Cola<Integer> q;
-
-    private final int INFINITO = Integer.MAX_VALUE;
+    protected double[] distanciaMin;
+    protected int[] caminoMin;
+    private final double INFINITO = Double.POSITIVE_INFINITY;
 
     public abstract int numVertices();
     public abstract int numAristas();
@@ -57,7 +61,9 @@ public abstract class Grafo {
         ordenVisita = 0;
         visitados = new int[numVertices()];
         for (int v = 0; v < numVertices(); v++) {
-            if (visitados[v] == 0) { toArrayDFS(v, res); }
+            if (visitados[v] == 0) {
+                toArrayDFS(v, res);
+            }
         }
         return res;
     }
@@ -130,61 +136,115 @@ public abstract class Grafo {
         res[ordenVisita--] = origen;
     }
 
-    public int distanciaMin(int v, int w){
-        int[] distancias = new int[numVertices()];
-        Arrays.fill(distancias, INFINITO);
+    // SII el Grafo es un Digrafo ...
+    public boolean hayCicloDFS() {
+        boolean ciclo = false;
+        visitados = new int[numVertices()];
+        for (int v = 0; v < numVertices() && !ciclo; v++)
+            if (visitados[v] == 0) {
+                ciclo = hayAristaHADFS(v);
+            }
+        return ciclo;
+    }
 
-        q = new LEGCola<>();
-        distancias[v] = 0;
+    protected boolean hayAristaHADFS(int v) {
+        boolean aristaHA = false;
+        visitados[v] = 1;
+
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        for (l.inicio(); !l.esFin() && !aristaHA; l.siguiente()) {
+            int w = l.recuperar().getDestino();
+            if (visitados[w] == 0) {
+                aristaHA = hayAristaHADFS(w);
+            }
+            else if (visitados[w] == 1) {
+                aristaHA = true;
+            }
+        }
+        visitados[v] = 2;
+        return aristaHA;
+    }
+
+    protected void caminosMinimosSinPesos(int v) {
+        caminoMin = new int[numVertices()];
+        distanciaMin = new double[numVertices()];
+        for (int i = 0; i < numVertices(); i++) {
+            caminoMin[i] = -1;
+            distanciaMin[i] = INFINITO;
+        }
+        distanciaMin[v] = 0;
+        q = new ArrayCola<>();
+
         q.encolar(v);
-
-        while (!q.esVacia()){
-            int actual = q.desencolar();
-            int distanciaActual = distancias[actual];
-            ListaConPI<Adyacente> adyacentes = adyacentesDe(actual);
-            for (adyacentes.inicio(); !adyacentes.esFin(); adyacentes.siguiente()){
-                Adyacente a = adyacentes.recuperar();
-                if (distancias[a.destino] == INFINITO){
-                    distancias[a.destino] = distanciaActual + 1;
-                    q.encolar(a.destino);
-                    if (a.destino == w)
-                        return distancias[w];
+        while (!q.esVacia()) {
+            int u = q.desencolar();
+            ListaConPI<Adyacente> l = adyacentesDe(u);
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                int w = l.recuperar().getDestino();
+                if (distanciaMin[w] == INFINITO) {
+                    distanciaMin[w] = distanciaMin[u] + 1;
+                    caminoMin[w] = u;
+                    q.encolar(w);
                 }
             }
         }
-        return distancias[w];
     }
 
-    public ListaConPI<Integer> caminoMin(int v, int w){
-        int[] camino = new int[numVertices()];
-        Arrays.fill(camino, -1);
+    protected ListaConPI<Integer> decodificarCaminoHasta(int w){
+        ListaConPI<Integer> l = new LEGListaConPI<>();
+        if (distanciaMin[w] != INFINITO) {
+            l.insertar(w);
+            while (caminoMin[w] != -1) {
+                l.inicio();
+                l.insertar(caminoMin[w]);
+                w = caminoMin[w];
+            }
+        }
+        return l;
+    }
 
-        q = new LEGCola<>();
-        q.encolar(v);
+    public ListaConPI<Integer> caminoMinimoSinPesos(int v, int w) {
+        caminosMinimosSinPesos(v);
+        return decodificarCaminoHasta(w);
+    }
 
-        boolean encontrado = false;
-        while (!q.esVacia() && !encontrado){
-            int actual = q.desencolar();
-            ListaConPI<Adyacente> adyacentes = adyacentesDe(actual);
-            for (adyacentes.inicio(); !adyacentes.esFin() && !encontrado; adyacentes.siguiente()){
-                Adyacente a = adyacentes.recuperar();
-                if (camino[a.destino] == -1){
-                    camino[a.destino] = actual;
-                    q.encolar(a.destino);
-                    if (a.destino == w)
-                        encontrado = true;
+    protected void dijkstra(int v){
+        visitados = new int[numVertices()];
+        caminoMin = new int[numVertices()];
+        distanciaMin = new double[numVertices()];
+        for (int i = 0; i < numVertices(); i++) {
+            caminoMin[i] = -1;
+            distanciaMin[i] = INFINITO;
+        }
+        ColaPrioridad<VerticeCoste> qP = new MonticuloBinario<>(numVertices());
+
+        qP.insertar(new VerticeCoste(v, 0));
+        distanciaMin[v] = 0;
+
+        while (!qP.esVacia()) {
+            VerticeCoste vC = qP.eliminarMin();
+            int u = vC.codigo;
+            if (visitados[u] == 0 ){
+                visitados[u] = 1;
+
+                ListaConPI<Adyacente> l = adyacentesDe(u);
+                for (l.inicio(); !l.esFin(); l.siguiente()) {
+                    Adyacente a = l.recuperar();
+                    int w = a.getDestino();
+                    double p = a.getPeso();
+
+                    if (distanciaMin[w] > vC.coste + p) {
+                        distanciaMin[w] = vC.coste + p;
+                        caminoMin[w] = u;
+                        qP.insertar(new VerticeCoste(w, distanciaMin[w]));
+                    }
                 }
             }
         }
-
-        ListaConPI<Integer> res = new LEGListaConPI<>();
-        int actual = w;
-        while (actual != -1){
-            res.inicio();
-            res.insertar(actual);
-            actual = camino[actual];
-        }
-        return res;
     }
 
+    public ListaConPI<Integer> caminoMinimo(int v, int w) {
+        dijkstra(v);
+        return decodificarCaminoHasta(w);
+    }
 }
