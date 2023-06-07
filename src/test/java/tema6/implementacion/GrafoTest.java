@@ -137,4 +137,15 @@ class GrafoTest {
     void ordenTopologico(){
         assertEquals("[8, 6, 5, 0, 4, 3, 7, 1, 2]", Arrays.toString(topologico.ordenTopologicoDFS()));
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0: 5: [0, 6]",
+            "1: 3: [1, 2, 4]",
+            "1: 5: [1, 2, 3, 4, 5]",
+            "4: 4: [0, 3, 4, 5]",
+    }, delimiter = ':')
+    void verticesCercanos(int v, int n, String expectedVertices){
+        assertEquals(expectedVertices, gdPesos.verticesCercanos(v, n).toString());
+    }
 }

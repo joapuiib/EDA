@@ -8,9 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class GrafoNoDirigidoTest {
     GrafoNoDirigido gnd;
 
+    GrafoNoDirigido noConexo;
+
     @BeforeEach
     void setup(){
         gnd = new GrafoNoDirigido(5);
+
+        noConexo = new GrafoNoDirigido(6);
+        noConexo.insertarArista(0, 1);
+        noConexo.insertarArista(0, 2);
+        noConexo.insertarArista(3, 4);
     }
 
     @Test
@@ -33,4 +40,8 @@ class GrafoNoDirigidoTest {
         );
     }
 
+    @Test
+    void componentesConexas(){
+        assertEquals("[[0, 1, 2], [3, 4], [5]]", noConexo.componentesConexas().toString());
+    }
 }

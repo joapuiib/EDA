@@ -1,5 +1,8 @@
 package tema6.implementacion;
 
+import tema1.implementacion.puntointeres.LEGListaConPI;
+import tema1.modelos.ListaConPI;
+
 public class GrafoNoDirigido extends GrafoDirigido {
     public GrafoNoDirigido(int nV){
         super(nV);
@@ -30,15 +33,6 @@ public class GrafoNoDirigido extends GrafoDirigido {
         return -1;
     }
 
-
-
-
-
-
-
-
-
-
     /**
      * Exercici 1.4
      */
@@ -58,5 +52,44 @@ public class GrafoNoDirigido extends GrafoDirigido {
      */
     public int getFuenteUniversal() {
         return -1;
+    }
+
+    public ListaConPI<ListaConPI<Integer>> componentesConexas(){
+        visitados = new int[numVertices()];
+
+        ListaConPI<ListaConPI<Integer>> res = new LEGListaConPI<>();
+
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0) {
+                ListaConPI<Integer> componentes = new LEGListaConPI<>();
+                componentesConexas(i, componentes);
+                res.insertar(componentes);
+            }
+        }
+
+        return res;
+    }
+
+    protected void componentesConexas(int v, ListaConPI<Integer> componentes){
+        visitados[v] = 1;
+        componentes.insertar(v);
+
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        for (l.inicio(); !l.esFin(); l.siguiente()){
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                componentesConexas(w, componentes);
+            }
+        }
+    }
+
+    /**
+     * Recuperació 2n parcial 2021/2022
+     */
+    @Override
+    public void eliminarArista(int i, int j){
+        super.eliminarArista(i, j);
+        super.eliminarArista(j, i);
     }
 }

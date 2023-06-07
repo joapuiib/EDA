@@ -153,7 +153,7 @@ public class GrafoDirigido extends Grafo{
 
         // Grado salida
         for (int i = 0; i < numVertices(); i++) {
-            grados[i] = adyacentesDe(i).talla();
+            grados[i] += adyacentesDe(i).talla();
         }
 
         // Calculamos el grado máximo
@@ -189,7 +189,7 @@ public class GrafoDirigido extends Grafo{
 
         // Grado salida
         for (int i = 0; i < numVertices(); i++) {
-            grados[i] = adyacentesDe(i).talla();
+            grados[i] += adyacentesDe(i).talla();
         }
 
         for (int i = 1; i < numVertices(); i++) {
@@ -298,6 +298,22 @@ public class GrafoDirigido extends Grafo{
                         visitados[w] = componente;
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Recuperació 2n parcial 2021/2022
+     */
+    public void eliminarArista(int i, int j){
+        ListaConPI<Adyacente> l = adyacentesDe(i);
+        for (l.inicio(); !l.esFin(); l.siguiente()){
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (w == j){
+                l.eliminar();
+                numA--;
+                return;
             }
         }
     }
