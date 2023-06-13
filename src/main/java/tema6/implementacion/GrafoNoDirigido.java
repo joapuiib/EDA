@@ -54,36 +54,6 @@ public class GrafoNoDirigido extends GrafoDirigido {
         return -1;
     }
 
-    public ListaConPI<ListaConPI<Integer>> componentesConexas(){
-        visitados = new int[numVertices()];
-
-        ListaConPI<ListaConPI<Integer>> res = new LEGListaConPI<>();
-
-        for (int i = 0; i < numVertices(); i++) {
-            if (visitados[i] == 0) {
-                ListaConPI<Integer> componentes = new LEGListaConPI<>();
-                componentesConexas(i, componentes);
-                res.insertar(componentes);
-            }
-        }
-
-        return res;
-    }
-
-    protected void componentesConexas(int v, ListaConPI<Integer> componentes){
-        visitados[v] = 1;
-        componentes.insertar(v);
-
-        ListaConPI<Adyacente> l = adyacentesDe(v);
-        for (l.inicio(); !l.esFin(); l.siguiente()){
-            Adyacente a = l.recuperar();
-            int w = a.getDestino();
-            if (visitados[w] == 0){
-                componentesConexas(w, componentes);
-            }
-        }
-    }
-
     /**
      * Recuperació 2n parcial 2021/2022
      */
@@ -92,4 +62,51 @@ public class GrafoNoDirigido extends GrafoDirigido {
         super.eliminarArista(i, j);
         super.eliminarArista(j, i);
     }
+
+    /**
+     * Recuperació 2n parcial 2018/2019
+     */
+    public int maxAristasCC(){
+        visitados = new int[numVertices()];
+        int maxAristasCC = 0;
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0){
+                int aristasCC = maxAristasCC(i) / 2;
+                maxAristasCC = Math.max(aristasCC, maxAristasCC);
+            }
+        }
+        return maxAristasCC;
+    }
+
+    protected int maxAristasCC(int v) {
+        visitados[v] = 1;
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        int res = l.talla();
+        for (l.inicio(); !l.esFin(); l.siguiente()) {
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                res += maxAristasCC(w);
+            }
+        }
+        return res;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

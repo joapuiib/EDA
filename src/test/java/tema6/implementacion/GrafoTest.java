@@ -148,4 +148,9 @@ class GrafoTest {
     void verticesCercanos(int v, int n, String expectedVertices){
         assertEquals(expectedVertices, gdPesos.verticesCercanos(v, n).toString());
     }
+
+    @Test
+    void tallaCC_noConexo(){
+        assertEquals("[3, 1, 2]", noConexo.tallaCC().toString());
+    }
 }

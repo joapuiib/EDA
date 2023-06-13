@@ -317,4 +317,79 @@ public class GrafoDirigido extends Grafo{
             }
         }
     }
+
+    /**
+     * 2n parcial 2015/2016
+     */
+    public boolean comprobarGradoEntrada(){
+        int[] gradosEntrada = new int[numVertices()];
+
+        for (int i = 0; i < numVertices(); i++) {
+            ListaConPI<Adyacente> l = adyacentesDe(i);
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                Adyacente a = l.recuperar();
+                int w = a.getDestino();
+                gradosEntrada[w]++;
+            }
+        }
+
+        int numVGradoCero = 0;
+        for (int i = 0; i < numVertices(); i++) {
+            if (gradosEntrada[i] > 1)
+                return false;
+            else if (gradosEntrada[i] == 0)
+                numVGradoCero++;
+        }
+        return numVGradoCero == 1;
+    }
+
+    /**
+     * 3r parcial 2014/2015
+     */
+    public GrafoDirigido complemento(){
+        GrafoDirigido gd = new GrafoDirigido(numVertices());
+
+        for (int i = 0; i < numVertices(); i++) {
+            ListaConPI<Adyacente> l = adyacentesDe(i);
+            boolean[] adyacentes = new boolean[numVertices()];
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                Adyacente a = l.recuperar();
+                int w = a.getDestino();
+                adyacentes[w] = true;
+            }
+
+            for (int j = 0; j < numVertices(); j++) {
+                if (!adyacentes[j] && i != j)
+                    gd.insertarArista(i, j);
+            }
+        }
+
+        return gd;
+    }
+
+    public int aislados(){
+        int[] grados = new int[numVertices()];
+
+        // Grados de salida
+        for (int i = 0; i < numVertices(); i++) {
+            grados[i] = adyacentesDe(i).talla();
+        }
+
+        // Grados de entrada
+        for (int i = 0; i < numVertices(); i++) {
+            ListaConPI<Adyacente> l = adyacentesDe(i);
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                Adyacente a = l.recuperar();
+                int w = a.getDestino();
+                grados[w]++;
+            }
+        }
+
+        int aislados = 0;
+        for (int i = 0; i < numVertices(); i++) {
+            if (grados[i] == 0)
+                aislados++;
+        }
+        return aislados;
+    }
 }

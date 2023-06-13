@@ -40,7 +40,7 @@ public abstract class Grafo {
     public String toString(){
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < numVertices(); i++) {
-            res.append("Vertice: ").append(i);
+            res.append("Vertice ").append(i);
             ListaConPI<Adyacente> l = adyacentesDe(i);
             if (l.esVacia())
                 res.append(" sin Adyacentes ");
@@ -162,6 +162,37 @@ public abstract class Grafo {
         visitados[v] = 2;
         return aristaHA;
     }
+
+    public ListaConPI<ListaConPI<Integer>> componentesConexas(){
+        visitados = new int[numVertices()];
+
+        ListaConPI<ListaConPI<Integer>> res = new LEGListaConPI<>();
+
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0) {
+                ListaConPI<Integer> componentes = new LEGListaConPI<>();
+                componentesConexas(i, componentes);
+                res.insertar(componentes);
+            }
+        }
+
+        return res;
+    }
+
+    protected void componentesConexas(int v, ListaConPI<Integer> componentes){
+        visitados[v] = 1;
+        componentes.insertar(v);
+
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        for (l.inicio(); !l.esFin(); l.siguiente()){
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                componentesConexas(w, componentes);
+            }
+        }
+    }
+
 
     protected void caminosMinimosSinPesos(int v) {
         caminoMin = new int[numVertices()];
@@ -414,7 +445,94 @@ public abstract class Grafo {
         }
         return true;
     }
+
+    /**
+     * 2n parcial de 2016/2017
+     */
+    public int aristasHA(){
+        visitados = new int[numVertices()];
+        int res = 0;
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0){
+                res += aristasHA(i);
+            }
+        }
+        return res;
+    }
+
+    protected int aristasHA(int v){
+        visitados[v] = 1;
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        int res = 0;
+        for (l.inicio(); !l.esFin(); l.siguiente()) {
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                res += aristasHA(w);
+            } else if (visitados[w] == 1) {
+                res++;
+            }
+        }
+        visitados[v] = 2;
+        return res;
+    }
+
+    public int numeroVerticesGradoSeparacions(int v, int g){
+        int[] distanciaMinima = new int[numVertices()];
+        for (int i = 0; i < numVertices(); i++) {
+            distanciaMinima[i] = Integer.MAX_VALUE;
+        }
+        q = new ArrayCola<>();
+
+        q.encolar(v);
+        distanciaMinima[v] = 0;
+
+        int res = 0;
+
+        while (!q.esVacia()){
+            int u = q.desencolar();
+
+            ListaConPI<Adyacente> l = adyacentesDe(u);
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                Adyacente a = l.recuperar();
+                int w = a.getDestino();
+                if (distanciaMinima[w] == Integer.MAX_VALUE){
+                    distanciaMinima[w] = distanciaMinima[u] + 1;
+
+                    if (distanciaMinima[w] == g)
+                        res++;
+                    else
+                        q.encolar(w);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 3r 2014/2015
+     */
+    public ListaConPI<Integer> tallaCC(){
+        visitados = new int[numVertices()];
+        ListaConPI<Integer> res = new LEGListaConPI<>();
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0)
+                res.insertar(tallaCC(i));
+        }
+        return res;
+    }
+
+    protected int tallaCC(int v){
+        visitados[v] = 1;
+        int res = 1;
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        for (l.inicio(); !l.esFin(); l.siguiente()) {
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                res += tallaCC(w);
+            }
+        }
+        return res;
+    }
 }
-
-
-

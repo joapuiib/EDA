@@ -89,4 +89,17 @@ class GrafoDirigidoTest {
     void gradoEntrada(){
         assertEquals(2, gd.gradoEntrada());
     }
+
+    @Test
+    void complemento(){
+        String complemento = """
+                Vertice 0 con Adyacentes: 2(1.0) 3(1.0) 4(1.0) 5(1.0)\040
+                Vertice 1 con Adyacentes: 0(1.0) 2(1.0) 5(1.0)\040
+                Vertice 2 con Adyacentes: 0(1.0) 1(1.0) 3(1.0) 4(1.0) 5(1.0)\040
+                Vertice 3 con Adyacentes: 1(1.0) 2(1.0) 5(1.0)\040
+                Vertice 4 con Adyacentes: 0(1.0) 1(1.0) 2(1.0) 3(1.0) 5(1.0)\040
+                Vertice 5 con Adyacentes: 0(1.0) 3(1.0) 4(1.0)\040
+                """;
+        assertEquals(complemento, gd.complemento().toString());
+    }
 }
