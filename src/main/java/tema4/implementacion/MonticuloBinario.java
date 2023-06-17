@@ -1,6 +1,7 @@
 package tema4.implementacion;
 
 import tema1.implementacion.puntointeres.LEGListaConPI;
+import tema1.modelos.ListaConPI;
 import tema4.modelos.ColaPrioridad;
 
 import java.util.Arrays;
@@ -253,5 +254,25 @@ public class MonticuloBinario<E extends Comparable<E>> implements ColaPrioridad<
             }
         }
         return true;
+    }
+
+    public ListaConPI<E> caminoDesdeMenorHoja(){
+        ListaConPI<E> l = new LEGListaConPI<>();
+
+        // E primeraHoja = elArray[talla / 2 + 1];
+        // E ultimaHoja = elArray[talla];
+        int indiceMin = talla / 2 + 1;
+        for (int i = indiceMin + 1; i <= talla ; i++) {
+            if(elArray[i].compareTo(elArray[indiceMin]) < 0){
+                indiceMin = i;
+            }
+        }
+
+        while (indiceMin >= 1){
+            l.insertar(elArray[indiceMin]);
+            indiceMin /= 2;
+        }
+
+        return l;
     }
 }

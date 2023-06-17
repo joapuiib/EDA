@@ -535,4 +535,63 @@ public abstract class Grafo {
         }
         return res;
     }
+
+    public int primeraRaiz(){
+        visitados = new int[numVertices()];
+        ordenVisita = 0;
+
+        for (int i = 0; i < numVertices(); i++) {
+            if (visitados[i] == 0){
+                visitados = new int[numVertices()];
+                ordenVisita = 0;
+
+                primeraRaiz(i);
+                if (ordenVisita == numVertices())
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+    protected void primeraRaiz(int v){
+        visitados[v] = 1;
+        ordenVisita++;
+
+        ListaConPI<Adyacente> l = adyacentesDe(v);
+        for (l.inicio(); !l.esFin(); l.siguiente()){
+            Adyacente a = l.recuperar();
+            int w = a.getDestino();
+            if (visitados[w] == 0){
+                primeraRaiz(w);
+            }
+        }
+    }
+
+    public int[] doblones(int v){
+        int[] doblones = new int[numVertices()];
+        final int INF = Integer.MAX_VALUE;
+        for (int i = 0; i < doblones.length; i++) {
+            doblones[i] = INF;
+        }
+
+        q = new ArrayCola<>();
+        doblones[v] = 0;
+        q.encolar(v);
+
+        while (!q.esVacia()){
+            int u = q.desencolar();
+
+            ListaConPI<Adyacente> l = adyacentesDe(u);
+            for (l.inicio(); !l.esFin(); l.siguiente()) {
+                Adyacente a = l.recuperar();
+                int w = a.getDestino();
+                if (doblones[w] == INF){
+                    doblones[w] = doblones[u] + 1;
+                    q.encolar(w);
+                }
+            }
+        }
+
+        return doblones;
+    }
 }

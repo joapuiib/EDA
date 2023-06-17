@@ -537,6 +537,40 @@ public class ABB<E extends Comparable<E>>{
             return caminoHasta(actual.der, e, l);
         }
     }
+
+    public E abueloDe(E e){
+        return kAscendenteDe(e, 2);
+    }
+    public E kAscendenteDe(E e, int k){
+        NodoABB<E> res = new NodoABB<>(null);
+        kAscendenteDe(raiz, e, k, res);
+        return res.dato;
+    }
+
+    protected int kAscendenteDe(NodoABB<E> actual, E e, int k, NodoABB<E> res){
+        if (actual == null)
+            return -1;
+
+        int cmp = e.compareTo(actual.dato);
+        int nivel;
+        if (cmp < 0)
+            nivel = kAscendenteDe(actual.izq, e, k, res);
+        else if (cmp > 0)
+            nivel = kAscendenteDe(actual.der, e, k, res);
+        else
+            return 0;
+
+        if (nivel == -1)
+            return -1;
+        else
+            nivel++;
+
+        if(nivel == k){
+            res.dato = actual.dato;
+        }
+
+        return nivel;
+    }
 }
 
 
